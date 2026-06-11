@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { sql } from '@/app/lib/db'
+import { getSql } from '@/app/lib/db'
 
 type SubscribeResult =
   | { success: true; count: number }
@@ -16,6 +16,8 @@ export async function subscribeEmail(
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { success: false, error: 'Please enter a valid email address.' }
   }
+
+  const sql = getSql()
 
   try {
     await sql`INSERT INTO email_signups (email) VALUES (${email})`

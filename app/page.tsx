@@ -1,8 +1,10 @@
-import { sql } from '@/app/lib/db'
+export const dynamic = 'force-dynamic'
+
+import { getSql } from '@/app/lib/db'
 import EmailForm from '@/app/components/EmailForm'
 
 async function getEmailCount(): Promise<number> {
-  const rows = await sql`SELECT COUNT(*)::int AS count FROM email_signups`
+  const rows = await getSql()`SELECT COUNT(*)::int AS count FROM email_signups`
   return rows[0].count
 }
 
